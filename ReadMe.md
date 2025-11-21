@@ -10,16 +10,14 @@ QuizMaster is a modern and fully responsive web-based quiz application built usi
 
 ## 🎮 Screenshots
 
-> Add your screenshots here (optional)
+![Home](screenshots/home.png)
+![Register](screenshots/register.png)
+![Login](screenshots/login.png)
+![Quiz](screenshots/quiz.png)
+![Results](screenshots/results.png)
+![Contact Us](screenshots/contactus.png)
+![Light & Dark Mode](screenshots/Light_Dark_Mode.png)
 
-```
-https://github.com/z2yad/QuizMaster/blob/main/screenshots/home.png
-https://github.com/z2yad/QuizMaster/blob/main/screenshots/register.png  
-https://github.com/z2yad/QuizMaster/blob/main/screenshots/login.png
-https://github.com/z2yad/QuizMaster/blob/main/screenshots/quiz.png  
-https://github.com/z2yad/QuizMaster/blob/main/screenshots/results.png
-https://github.com/z2yad/QuizMaster/blob/main/screenshots/contactus.png
-https://github.com/z2yad/QuizMaster/blob/main/screenshots/Light_Dark_Mode.png
 ```
 
 ---
