@@ -18,9 +18,8 @@ QuizMaster is a modern and fully responsive web-based quiz application built usi
 ![Contact Us](screenshots/contactus.png)
 ![Light & Dark Mode](screenshots/Light_Dark_Mode.png)
 
-```
 
----
+
 
 ## ✨ Key Features
 
@@ -59,32 +58,32 @@ QuizMaster is a modern and fully responsive web-based quiz application built usi
 
 Clone the repository:
 
-```bash
+bash
 git clone https://github.com/z2yad/QuizMaster.git
 cd QuizMaster
-```
+
 
 Run the app:
 
-```bash
+bash
 # Just open index.html in your browser
 
 # OR via VS Code:
 # Run using Live Server extension
-```
+
 
 ---
 
 ## 📂 Project Structure
 
-```
+
 QuizMaster/
 ├── screenshots/    # Screenshots folder
 ├── index.html      # Main HTML file
 ├── app.js          # Core application logic
 ├── style.css       # Application styles and themes
 └── README.md       # Documentation
-```
+
 
 ---
 
