@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster - Test Your Knowledge</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/navigo@7.1.2/dist/navigo.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a  path="index.html" href="#home">
+                    <i class="fas fa-brain"></i>
+                    <span>QuizMaster</span>
+                    </a>
+                </div>
+             <!-- Navbar -->
+                   
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#quiz">Quiz</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <!-- أزرار المودالات -->
+                        <li class="nav-item"><a class="nav-link login-btn" href="#login" data-open="login-modal">Login</a></li>
+                        <li class="nav-item"><a class="nav-link signup-btn" href="#signup" data-open="signup-modal">Sign Up</a></li>
+                    </ul>
+                    
+
+                <div class="user-menu hidden">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-dropdown">
+                        <span class="user-name">User123</span>
+                        <div class="dropdown-content">
+                            <a href="#profile"><i class="fas fa-user"></i> Profile</a>
+                            <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="#admin" class="admin-link hidden"><i class="fas fa-lock"></i> Admin Panel</a>
+                            <a href="#logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+         <!-- Login Modal -->
+<section id="login" class="page">
+  <form class="form-container glow-form" id="login-form">
+    <fieldset>
+      <legend class="glow-legend">Login</legend>
+
+      <div class="form-group">
+        <label for="login-email">Username</label>
+        <input type="text" id="login-username" placeholder="Enter your username" title="Username input field">
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" >
+      </div>
+
+    <button type="submit" class="btn"><span>Login</span></button>
+      <a href="#forgot-password">Forgot Password?</a>
+      <a href="#signup">Create an account</a>
+    </fieldset>
+    <div id="errors-messge-login" class="message-box"></div>
+  </form>
+  
+
+</section>
+
+<!-- Signup Modal -->
+<section id="signup" class="page ">
+    <div id="errors-messge-signup" class="toast"></div>
+  <form class="form-container glow-form" id="signup-form">
+    <fieldset>
+      <legend class="glow-legend">Create Account</legend>
+
+      <div class="welcome-message">
+        <h2>Join Us Today!</h2>
+        <p>Create your account to get started</p>
+      </div>
+
+      <div class="form-group">
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" placeholder="Enter your full name" >
+        <small class="error" id="name-error"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="signup-email">Email Address</label>
+        <input type="email" id="signup-email" placeholder="Enter your email" >
+        <small class="error" id="email-error"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="signup-phone">Phone Number</label>
+        <input type="tel" id="signup-phone" placeholder="Enter your phone number">
+        <small class="error" id="phone-error"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="signup-birthdate">Date of Birth</label>
+        <input type="date" id="signup-birthdate">
+        <small class="error" id="birthdate-error"></small>
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="radio-group">
+          <input type="radio" id="gender-male" name="gender" value="male">
+          <label for="gender-male">Male</label>
+          <input type="radio" id="gender-female" name="gender" value="female">
+          <label for="gender-female">Female</label>
+          <small class="error" id="gender-error"></small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Create a strong password" >
+        <small class="error" id="password-error"></small>
+        <div class="password-strength">
+          <div class="strength-bar"></div>
+          <span class="strength-text">Password strength</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="signup-confirm-password">Confirm Password</label>
+        <input type="password" id="signup-confirm-password" placeholder="Confirm your password" >
+        <small class="error" id="confirm-password-error"></small>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="terms-agree" >
+        <label for="terms-agree">I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a></label>
+        <small class="error" id="terms-error"></small>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="newsletter-subscribe">
+        <label for="newsletter-subscribe">Subscribe to our newsletter for updates</label>
+        <small class="error" id="newsletter-error"></small>
+      </div>
+
+      <button type="submit" class="btn"><span>Create Account</span></button>
+      <br>
+      <div class="form-footer">
+        <p>Already have an account? <a href="#login">Login here</a></p>
+      </div>
+    </fieldset>
+  </form>
+
+  <!-- Success Message (hidden by default) -->
+  <div class="success-message hidden">
+    <h2>Welcome aboard!</h2>
+    <p>Your account has been created successfully. We've sent a verification email to your inbox.</p>
+    <button class="btn">Continue to Dashboard</button>
+  </div>
+</section>
+        <!-- Admin Panel (Hidden by default) -->
+     <section class="admin-panel hidden" role="dialog" aria-labelledby="admin-panel-title" aria-modal="true">
+            <div class="admin-container">
+                <div class="admin-sidebar">
+                    <div class="admin-logo">
+                        <i class="fas fa-lock"></i>
+                        <span>Admin Panel</span>
+                    </div>
+                    <ul class="admin-menu">
+                        <li class="admin-menu-item active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li class="admin-menu-item"><a href="#quizzes"><i class="fas fa-question-circle"></i> Quizzes</a></li>
+                        <li class="admin-menu-item"><a href="#users"><i class="fas fa-users"></i> Users</a></li>
+                        <li class="admin-menu-item"><a href="#categories"><i class="fas fa-tags"></i> Categories</a></li>
+                        <li class="admin-menu-item"><a href="#results"><i class="fas fa-chart-bar"></i> Results</a></li>
+                        <li class="admin-menu-item"><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+                    </ul>
+                    <button class="back-to-app">
+                        <i class="fas fa-arrow-left"></i> Back to App
+                    </button>
+                </div>
+                <div class="admin-content">
+                    <div class="admin-header">
+                        <h1>Admin Dashboard</h1>
+                        <div class="admin-stats">
+                            <div class="stat-card">
+                                <div class="stat-icon users">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-number">1,254</span>
+                                    <span class="stat-label">Total Users</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon quizzes">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-number">543</span>
+                                    <span class="stat-label">Total Quizzes</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon results">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-number">8,742</span>
+                                    <span class="stat-label">Quiz Attempts</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon categories">
+                                    <i class="fas fa-tags"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-number">12</span>
+                                    <span class="stat-label">Categories</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-main">
+                        <div class="recent-activities">
+                            <h2>Recent Activities</h2>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <p>New user registered: <strong>John Doe</strong></p>
+                                        <span class="activity-time">2 minutes ago</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <p>Quiz <strong>Science Trivia</strong> was completed by <strong>Sarah Smith</strong></p>
+                                        <span class="activity-time">15 minutes ago</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-plus-circle"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <p>New quiz <strong>World Capitals</strong> was added</p>
+                                        <span class="activity-time">1 hour ago</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <p>User <strong>Mike Johnson</strong> reported a question</p>
+                                        <span class="activity-time">3 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <h2>Quick Actions</h2>
+                            <div class="action-buttons">
+                                <button class="action-btn">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add New Quiz</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span>Add User</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-tag"></i>
+                                    <span>Create Category</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>View Reports</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section id="home" class="page">
+            <div class="home-container">
+                <div class="home-header">
+                    <h1>Challenge Your <span class="highlight">Knowledge</span></h1>
+                    <p>Select a category to start your quiz journey and test what you know!</p>
+                     <div class="search-box">
+                         <i class="fas fa-search"></i>
+                         <input type="text" placeholder="Search categories...">
+                    </div>
+
+                </div>
+
+                <div class="categories">
+                    <div class="category-card" data-category="history">
+                        <div class="card-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>History</h3>
+                        <p>Explore past events and civilizations</p>
+                        <div class="card-badge">12 quizzes</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="science">
+                        <div class="card-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <h3>Science</h3>
+                       <p>Discover the wonders of science</p>
+                        <div class="card-badge">8 quizzes</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="geography">
+                        <div class="card-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3>Geography</h3>
+                        <p>Travel the world through questions</p>
+                        <div class="card-badge">10 quizzes</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="sports">
+                        <div class="card-icon">
+                            <i class="fas fa-running"></i>
+                        </div>
+                        <h3>Sports</h3>
+                        <p>Test your knowledge of games & athletes</p>
+                        <div class="card-badge">7 quizzes</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="technology">
+                        <div class="card-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Technology</h3>
+                        <p>From coding to gadgets and more</p>
+                        <div class="card-badge">15 quizzes</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="arts">
+                        <div class="card-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Arts & Culture</h3>
+                        <p>Explore creative expressions</p>
+                        <div class="card-badge">9 quizzes</div>
+                    </div>
+                </div>
+                
+                <div class="start-quiz-btn hidden">
+                    <button class="btn-primary">Start Quiz <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+        <section id="quiz" class="page">
+            <div class="quiz-container">
+                <div class="quizheader">
+                    <h2>quiz:<span id="quiz-category">General Knowledge</span></h2>
+                    <div class="quizprogress">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                      <div>  
+                        <span class="progress-text">question
+                          <span id="current-question">1</span> 
+                          <h4>from</h4>
+                          <span id="total-questions">15</span>
+                        </span></div>
+                    </div>
+                </div>
+             <!-- في قسم الكويز، هناك خطأ إملائي في class -->
+            <div class="quiz-content"> <!-- تم تصحيح "quiz-conten t" إلى "quiz-content" -->
+                <div class="quiz-card">
+                    <h3 id="question-text">Loading question...</h3> <!-- إضافة ID لعنصر نص السؤال -->
+                </div>
+                <div class="answers-content" id="answers-content">
+                </div>
+                <div class="quiz-control">
+                    <button id="prev-btn" class="btn-secondary" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button id="next-btn" class="btn-primary">
+                        <i class="fas fa-arrow-right"></i>
+                        Next
+                    </button>
+                    <button id="submit-quiz" class="btn-success hidden">
+                        Submit Quiz
+                    </button>
+                </div>
+            </div>
+            </div>
+        </section>
+        <!-- صفحة النتائج -->
+        <section id="results" class="page ">
+                    <div class="results-container">
+                        <h2>Your Results</h2>
+                        <div class="score-container">
+                            <div class="score-circle">
+                                <span id="score-percentage">0%</span>
+                            </div>
+                            <p>You scored <span id="correct-answers">0</span> out of <span id="total-answers">0</span></p>
+                        </div>
+                        <button id="retry-quiz" class="btn-primary">Try Another Quiz</button>
+                    </div>
+                </section>
+
+        
+        <!-- صفحة حول التطبيق -->
+       
+        
+        <!-- باقي العناصر الثابتة -->
+        <div class="notification-toast hidden">...</div>
+        <section id="about" class="page ">
+            <div class="about-container">
+                <div class="about-header">
+                    <h1>About <span class="highlight">QuizMaster</span></h1>
+                    <p>Discover the story behind our knowledge platform</p>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>At QuizMaster, we believe that learning should be engaging, interactive, and accessible to everyone. 
+                        Our mission is to make knowledge testing fun and rewarding through our innovative quiz platform.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>What We Offer</h3>
+                        <p>With hundreds of questions across diverse categories including History, Science, Technology, Sports, and more, 
+                        QuizMaster provides an endless opportunity to challenge yourself and expand your knowledge horizons.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>For Everyone</h3>
+                        <p>Whether you're a student looking to test your knowledge, a teacher seeking engaging classroom activities, 
+                        or just someone who loves trivia, QuizMaster has something for you.</p>
+                    </div>
+
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="quiz-count">500+</span>
+                            <span class="stat-label">Quizzes</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="category-count">12+</span>
+                            <span class="stat-label">Categories</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="user-count">10,000+</span>
+                            <span class="stat-label">Active Users</span>
+                        </div>
+                    </div>
+
+                    <div class="about-team">
+                        <h2>How It Works</h2>
+                        <div class="process-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <h4>Choose a Category</h4>
+                                <p>Select from our diverse range of knowledge categories</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <h4>Take the Quiz</h4>
+                                <p>Answer multiple-choice questions at your own pace</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <h4>Get Results</h4>
+                                <p>Receive immediate feedback and detailed results</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <h4>Track Progress</h4>
+                                <p>Monitor your improvement over time with our tracking system</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+<section id="contact" class="page">
+  <div class="contact-container">
+    <div class="contact-header">
+      <h1>Contact <span class="highlight">Us</span></h1>
+      <p>We'd love to hear from you! Get in touch with our team.</p>
+    </div>
+
+    <div class="contact-content">
+      <div class="contact-info">
+        <div class="info-card ">
+          <div class="info-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Email Us</h3>
+          <p>General Inquiries: <a href="mailto:ziadsalim121@gmail.com">ziadsalim121@gmail.com</a></p>
+          <p>Support: <a href="mailto:ziyadsalem693@gmail.com">ziyadsalem693@gmail.com</a></p>
+        </div>
+
+        <div class="info-card ">
+          <div class="info-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3>Response Time</h3>
+          <p>We typically respond to all inquiries within 24-48 hours during business days.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3>Stay Connected</h3>
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/1Hy3amM7h1/" class="social-link"><i class="fab fa-facebook"></i></a>
+            <a href="https://github.com/z2yad" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/zeyad_ssalem?igsh=b2J0NTNjbjQ2dmRl" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/zeyad-salim-3a745a342/" class="social-link"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form glow-form" id="contact-form">
+        <fieldset>
+          <legend class="glow-legend">Send us a Message</legend>
+
+          <div class="form-group">
+            <label for="contact-name">Full Name</label>
+            <input type="text" id="contact-name" placeholder="Enter your UserName">
+            <small class="error" id="contact-name-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-email">Email Address</label>
+            <input type="email" id="contact-email" placeholder="Enter your email">
+            <small class="error" id="contact-email-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-subject">Subject</label>
+            <select id="contact-subject" >
+              <option value="">Select a subject</option>
+              <option value="general">General Inquiry</option>
+              <option value="support">Technical Support</option>
+              <option value="partnership">Partnership Opportunity</option>
+              <option value="suggestion">Feature Suggestion</option>
+              <option value="bug">Report a Bug</option>
+              <option value="other">Other</option>
+            </select>
+            <small class="error" id="contact-subject-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" rows="5" placeholder="Type your message here..." required></textarea>
+            <small class="error" id="contact-message-error"></small>
+          </div>
+
+          <button type="submit" class="btn"><span>Send Message</span></button>
+        </fieldset>
+        <div id="contact-message-box" class="message-box"></div>
+      </form>
+    </div>
+
+    <div class="faq-section ">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list ">
+        <div class="faq-item">
+          <div class="faq-question ">
+            <span>Is QuizMaster completely free to use?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, QuizMaster is completely free to use! We believe in making knowledge accessible to everyone without any cost barriers.</p>
+          </div>
+        </div>
+
+        <div class="faq-item ">
+          <div class="faq-question">
+            <span>Can I create my own quizzes on QuizMaster?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Currently, we're focused on providing curated content from reliable sources. However, we're working on a feature that will allow users to create and share their own quizzes in the future!</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How often is new content added?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We add new quizzes and questions every week across various categories. Our content team works continuously to expand our knowledge database.</p>
+          </div>
+        </div>
+
+        <div class="faq-item ">
+          <div class="faq-question">
+            <span>Is there a mobile app available?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Our website is fully responsive and works perfectly on mobile devices. We're also developing dedicated mobile apps for iOS and Android, coming soon!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="notification-toast hidden">
+  <i class="fas fa-check-circle"></i>
+  <span>Category selected successfully!</span>
+</div>
+    <script src="app.js">
+      
+    </script>
+    
+</body>
+</html>
