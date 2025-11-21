@@ -13,13 +13,13 @@ QuizMaster is a modern and fully responsive web-based quiz application built usi
 > Add your screenshots here (optional)
 
 ```
-./screenshots/home.png  
-./screenshots/register.png  
-./screenshots/login.png  
-./screenshots/quiz.png  
-./screenshots/results.png
-./screenshots/contactus.png
-./screenshots/Light_Dark_Mode.png
+https://github.com/z2yad/QuizMaster/blob/main/screenshots/home.png
+https://github.com/z2yad/QuizMaster/blob/main/screenshots/register.png  
+https://github.com/z2yad/QuizMaster/blob/main/screenshots/login.png
+https://github.com/z2yad/QuizMaster/blob/main/screenshots/quiz.png  
+https://github.com/z2yad/QuizMaster/blob/main/screenshots/results.png
+https://github.com/z2yad/QuizMaster/blob/main/screenshots/contactus.png
+https://github.com/z2yad/QuizMaster/blob/main/screenshots/Light_Dark_Mode.png
 ```
 
 ---
