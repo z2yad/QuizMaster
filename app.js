@@ -55,6 +55,65 @@ function initThemeToggle() {
 }
 
 // -----------------------
+// Hamburger Menu Toggle
+// -----------------------
+function initHamburgerMenu() {
+  const hamburger = document.querySelector(".hamburger");
+  const navMenu = document.querySelector(".nav-menu");
+  const navLinks = document.querySelectorAll(".nav-link");
+  const body = document.body;
+
+  if (!hamburger || !navMenu) return;
+
+  // Toggle menu on hamburger click
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active");
+    body.classList.toggle("menu-open");
+  });
+
+  // Close menu when clicking on a nav link
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("active");
+      navMenu.classList.remove("active");
+      body.classList.remove("menu-open");
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener("click", (e) => {
+    const isClickInsideNav = navMenu.contains(e.target);
+    const isClickOnHamburger = hamburger.contains(e.target);
+
+    if (!isClickInsideNav && !isClickOnHamburger && navMenu.classList.contains("active")) {
+      hamburger.classList.remove("active");
+      navMenu.classList.remove("active");
+      body.classList.remove("menu-open");
+    }
+  });
+
+  // Close menu on escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navMenu.classList.contains("active")) {
+      hamburger.classList.remove("active");
+      navMenu.classList.remove("active");
+      body.classList.remove("menu-open");
+    }
+  });
+
+  // Handle window resize
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 992 && navMenu.classList.contains("active")) {
+      hamburger.classList.remove("active");
+      navMenu.classList.remove("active");
+      body.classList.remove("menu-open");
+    }
+  });
+}
+
+
+// -----------------------
 // Category Selection
 // -----------------------
 function initCategorySelection() {
@@ -85,7 +144,7 @@ function initCategorySelection() {
 // -----------------------
 function initSearch() {
   if (!searchInput) return;
-  
+
   searchInput.addEventListener("input", function () {
     const searchTerm = this.value.toLowerCase();
 
@@ -138,7 +197,7 @@ function initRouting() {
     link.addEventListener("click", function (e) {
       e.preventDefault();
       const pageId = this.getAttribute("href").substring(1);
-      navigateTo(pageId);               
+      navigateTo(pageId);
     });
   });
 
@@ -163,9 +222,9 @@ async function fetchQuestions(category, difficulty, amount = 15) {
       "technology": 18,
       "arts": 25
     };
-    
+
     const categoryId = categoryMap[category] || 9; // 9 هو General Knowledge
-    
+
     const api_url = `https://opentdb.com/api.php?amount=${amount}&category=${categoryId}&difficulty=${difficulty}&type=multiple`;
     const response = await fetch(api_url);
 
@@ -345,6 +404,9 @@ function submitQuiz() {
   document.getElementById("correct-answers").textContent = correctCount;
   document.getElementById("total-answers").textContent = quizState.questions.length;
 
+  const scoreCircle = document.querySelector(".score-circle");
+  scoreCircle.style.background = `conic-gradient(var(--primary-color) ${scorePercentage}%, #e9ecef ${scorePercentage}%)`;
+
   navigateTo("results");
 }
 
@@ -366,13 +428,80 @@ function shuffleArray(array) {
 }
 
 // -----------------------
+// Scroll Animations
+// -----------------------
+function initScrollAnimations() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target); // Animate once
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(".scroll-animate").forEach((el) => {
+    observer.observe(el);
+  });
+}
+
+// -----------------------
+// Auth UI Handling
+// -----------------------
+function updateAuthUI() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const loginBtn = document.querySelector(".login-btn");
+  const signupBtn = document.querySelector(".signup-btn");
+  const userMenu = document.querySelector(".user-menu");
+  const userNameDisplay = document.querySelector(".user-name");
+
+  if (currentUser) {
+    if (loginBtn) loginBtn.parentElement.classList.add("hidden");
+    if (signupBtn) signupBtn.parentElement.classList.add("hidden");
+    if (userMenu) {
+      userMenu.classList.remove("hidden");
+      if (userNameDisplay) userNameDisplay.textContent = currentUser.name || "User";
+    }
+  } else {
+    if (loginBtn) loginBtn.parentElement.classList.remove("hidden");
+    if (signupBtn) signupBtn.parentElement.classList.remove("hidden");
+    if (userMenu) userMenu.classList.add("hidden");
+  }
+}
+
+// -----------------------
 // App Init
 // -----------------------
 function initApp() {
   initThemeToggle();
+  initHamburgerMenu();
+  initScrollAnimations();
   initCategorySelection();
   initSearch();
   initRouting();
+  updateAuthUI();
+
+  // Logout Handler
+  const logoutLink = document.querySelector('a[href="#logout"]');
+  if (logoutLink) {
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("currentUser");
+      updateAuthUI();
+      navigateTo("home");
+      const toast = document.querySelector(".notification-toast");
+      toast.innerHTML = '<i class="fas fa-check-circle"></i> Logged out successfully';
+      toast.classList.add("active");
+      setTimeout(() => {
+        toast.classList.remove("active");
+      }, 3000);
+    });
+  }
 
   // أزرار التنقل
   nextBtn.addEventListener("click", goToNextQuestion);
@@ -395,7 +524,7 @@ function initApp() {
 document.addEventListener("DOMContentLoaded", initApp);
 //HAShing password
 // يحوّل ArrayBuffer إلى Hex string
-function bufferToHex(buffer){
+function bufferToHex(buffer) {
   const bytes = new Uint8Array(buffer);
   return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
 }
@@ -429,10 +558,15 @@ loginForm.addEventListener("submit", async (e) => {
     messages.push("Please fill in all fields");
   } else {
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    const userData = users.find(u => u.username === loginUsernameInput.toLowerCase());
+    // Check for username (if stored), email, or name
+    const userData = users.find(u =>
+      (u.username && u.username.toLowerCase() === loginUsernameInput.toLowerCase()) ||
+      (u.email && u.email.toLowerCase() === loginUsernameInput.toLowerCase()) ||
+      (u.name && u.name.toLowerCase() === loginUsernameInput.toLowerCase())
+    );
 
     if (!userData) {
-      messages.push("Username not found");
+      messages.push("User not found");
     } else {
       // hash login password
       const loginPasswordHash = await hashPasswordSHA256(loginPasswordInput, userData.salt);
@@ -440,8 +574,12 @@ loginForm.addEventListener("submit", async (e) => {
       if (loginPasswordHash !== userData.hashedPassword) {
         messages.push("Incorrect password");
       } else {
-       showMessage(errorsMessageLogin, "Login successful 🎉 Redirecting...", "success");
-        
+        showMessage(errorsMessageLogin, "Login successful 🎉 Redirecting...", "success");
+
+        // Save current user session
+        localStorage.setItem("currentUser", JSON.stringify(userData));
+        updateAuthUI();
+
         return; // نوقف الكود عشان منعرضش error
       }
     }
@@ -484,7 +622,7 @@ const signupForm = document.getElementById("signup-form");
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const messages = [];
-   const name = document.getElementById("signup-name").value.trim();
+  const name = document.getElementById("signup-name").value.trim();
   const email = document.getElementById("signup-email").value.trim();
   const password = document.getElementById("signup-password").value.trim();
   const confirmPassword = document.getElementById("signup-confirm-password").value.trim();
@@ -495,74 +633,74 @@ signupForm.addEventListener('submit', async (e) => {
 
 
   // validate name
-  if(!name) document.getElementById("name-error").textContent = "Please enter your name";
+  if (!name) document.getElementById("name-error").textContent = "Please enter your name";
 
   // validate email
-  if(!email) document.getElementById("email-error").textContent = "Please enter your email";
+  if (!email) document.getElementById("email-error").textContent = "Please enter your email";
   const emailpattern = /^[^]+@[^]+\.[a-zA-Z]{2,3}$/;
-  if(!emailpattern.test(email)) document.getElementById("email-error").textContent = "Please enter a valid email address";
+  if (!emailpattern.test(email)) document.getElementById("email-error").textContent = "Please enter a valid email address";
   //لو فى اى مشكله مش هيكمل 
   // validate 
-  
-  if(!password ) document.getElementById("password-error").textContent = "Please enter your password";
+
+  if (!password) document.getElementById("password-error").textContent = "Please enter your password";
   const passwordstrong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if(password&&!passwordstrong.test(password)) document.getElementById("password-error").textContent = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character";
+  if (password && !passwordstrong.test(password)) document.getElementById("password-error").textContent = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character";
   // validate confirm password
-  if(!confirmPassword) document.getElementById("confirm-password-error").textContent = "Please confirm your password";
-  if(password !== confirmPassword) document.getElementById("confirm-password-error").textContent = "Passwords do not match";
+  if (!confirmPassword) document.getElementById("confirm-password-error").textContent = "Please confirm your password";
+  if (password !== confirmPassword) document.getElementById("confirm-password-error").textContent = "Passwords do not match";
   // validate terms
-  if(!terms) document.getElementById("terms-error").textContent = "You must agree to the Terms and Conditions";
+  if (!terms) document.getElementById("terms-error").textContent = "You must agree to the Terms and Conditions";
   // validate phone
   const phonepattern = /^(?:01[0-2]|015)[0-9]{8}$|^(?:\+201[0-2]|\\+2015)[0-9]{8}$/; //صيغة  ل regexدولية 
 
-  if(!phone) document.getElementById('phone-error').textContent="Please enter your phone number";
-  if(!phonepattern.test(phone)) document.getElementById('phone-error').textContent="phone number must have 11 digits";
+  if (!phone) document.getElementById('phone-error').textContent = "Please enter your phone number";
+  if (!phonepattern.test(phone)) document.getElementById('phone-error').textContent = "phone number must have 11 digits";
   // validate birthdate
-  if(!birthdate) {
-    document.getElementById('birthdate-error').textContent="Please enter your birthdate";
-  }else{
+  if (!birthdate) {
+    document.getElementById('birthdate-error').textContent = "Please enter your birthdate";
+  } else {
     const today = new Date();
     const userbirthdate = new Date(birthdate);
-    if(userbirthdate > today) document.getElementById('birthdate-error').textContent="Birthdate cannot be in the future";
+    if (userbirthdate > today) document.getElementById('birthdate-error').textContent = "Birthdate cannot be in the future";
   }
- ;//مسح الخطاء الى كان قبل كدا
+  ;//مسح الخطاء الى كان قبل كدا
 
- if (document.querySelectorAll(".error:not(:empty)").length > 0) return;
+  if (document.querySelectorAll(".error:not(:empty)").length > 0) return;
   // 5. check LocalStorage
-const emailNormalized = email.toLowerCase();
-let user = JSON.parse(localStorage.getItem("users")) || [];
-const userExists = user.some(u => u.email === emailNormalized);
-if(userExists){
-  document.getElementById("email-error").textContent = "Email already exists";
-  return;
-}
+  const emailNormalized = email.toLowerCase();
+  let user = JSON.parse(localStorage.getItem("users")) || [];
+  const userExists = user.some(u => u.email === emailNormalized);
+  if (userExists) {
+    document.getElementById("email-error").textContent = "Email already exists";
+    return;
+  }
   // generate salt and hash password
   const salt = generateSalt(16);
- const passwordHash = await hashPasswordSHA256(password, salt);
+  const passwordHash = await hashPasswordSHA256(password, salt);
 
-//هنا مرحلة التخزين ف object
-const userData = {
-  name,
-  email: emailNormalized,
-  password,
-  phone,
-  birthdate,
-  createdAt: new Date().toISOString()
-}
-user.push(userData);
-localStorage.setItem("users", JSON.stringify(user));
-// 7. success message
- const errorBox = document.getElementById("errors-messge-signup");
+  //هنا مرحلة التخزين ف object
+  const userData = {
+    name,
+    email: emailNormalized,
+    password,
+    phone,
+    birthdate,
+    createdAt: new Date().toISOString()
+  }
+  user.push(userData);
+  localStorage.setItem("users", JSON.stringify(user));
+  // 7. success message
+  const errorBox = document.getElementById("errors-messge-signup");
   errorBox.className = "toast success show";
   errorBox.textContent = "✅ Account created successfully!";
   signupForm.reset()
-// اختفاء بعد 5 ثواني
-setTimeout(() => {
-  errorBox.classList.remove("show");
-  errorBox.textContent = "";
-  
-}, 5000);
-signupForm.reset();
+  // اختفاء بعد 5 ثواني
+  setTimeout(() => {
+    errorBox.classList.remove("show");
+    errorBox.textContent = "";
+
+  }, 5000);
+  signupForm.reset();
 });
 
 // advanced logic for password
@@ -574,25 +712,25 @@ passwordInput.addEventListener("input", () => {
   const value = passwordInput.value;
   let strength = 0;
 
-  if(/[a-z]/.test(value)) strength++;
-  if(/[A-Z]/.test(value)) strength++;
-  if(/[0-9]/.test(value)) strength++;
-  if(/[@$!%*?&]/.test(value)) strength++;
-  if(value.length >= 8) strength++;
+  if (/[a-z]/.test(value)) strength++;
+  if (/[A-Z]/.test(value)) strength++;
+  if (/[0-9]/.test(value)) strength++;
+  if (/[@$!%*?&]/.test(value)) strength++;
+  if (value.length >= 8) strength++;
 
   // حساب العرض
   const width = (strength / 5) * 100;
   strengthBar.style.width = `${width}%`;
 
   // اللون تدريجي باستخدام HSL من أحمر (0deg) إلى أخضر (120deg)
-  const hue = (strength / 5) * 120; 
+  const hue = (strength / 5) * 120;
   strengthBar.style.backgroundColor = `hsl(${hue}, 80%, 50%)`;
 
   // النص حسب القوة
-  if(strength === 5) {
+  if (strength === 5) {
     strengthText.textContent = "Strong";
     strengthText.style.color = `hsl(${hue}, 80%, 40%)`;
-  } else if(strength >= 3) {
+  } else if (strength >= 3) {
     strengthText.textContent = "Medium";
     strengthText.style.color = `hsl(${hue}, 80%, 40%)`;
   } else {
@@ -602,32 +740,32 @@ passwordInput.addEventListener("input", () => {
 });
 //contact page
 //validate contact form
-document.getElementById('contact-form').addEventListener('submit',(e)=>{
+document.getElementById('contact-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const phone = document.getElementById('phone').value;
   const message = document.getElementById('message').value;
   const subject = document.getElementById('contact-subject')
- if(!name) return document.getElementById('contact-name-error').textContent = "Please enter your name";
- if(!email) return document.getElementById('contact-email-error').textContent = "Please enter your email";
- const emailpattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
- if(email&&!emailpattern.test(email)) return document.getElementById('contact-email-error').textContent = "Please enter a valid email address";
- const phonepattern = /^(?:01[0-2]|015)[0-9]{8}$|^(?:\+201[0-2]|\\+2015)[0-9]{8}$/;
- if(phone&&!phonepattern.test(phone)) return document.getElementById('contact-phone-error').textContent = "Please enter a valid phone number";
- if(!phone) return document.getElementById('contact-phone-error').textContent = "Please enter your phone number";
- if(!phonepattern.test(phone)) return document.getElementById('contact-phone-error').textContent = "Please enter a valid phone number";
- if(!message) return document.getElementById('contact-message-error').textContent = "Please enter your message";
- if(!subject) return document.getElementById('contact-subject-error').textContent = "please selcet your subject"
-   // send email
+  if (!name) return document.getElementById('contact-name-error').textContent = "Please enter your name";
+  if (!email) return document.getElementById('contact-email-error').textContent = "Please enter your email";
+  const emailpattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if (email && !emailpattern.test(email)) return document.getElementById('contact-email-error').textContent = "Please enter a valid email address";
+  const phonepattern = /^(?:01[0-2]|015)[0-9]{8}$|^(?:\+201[0-2]|\\+2015)[0-9]{8}$/;
+  if (phone && !phonepattern.test(phone)) return document.getElementById('contact-phone-error').textContent = "Please enter a valid phone number";
+  if (!phone) return document.getElementById('contact-phone-error').textContent = "Please enter your phone number";
+  if (!phonepattern.test(phone)) return document.getElementById('contact-phone-error').textContent = "Please enter a valid phone number";
+  if (!message) return document.getElementById('contact-message-error').textContent = "Please enter your message";
+  if (!subject) return document.getElementById('contact-subject-error').textContent = "please selcet your subject"
+  // send email
   email.send({
-    Host : "smtp.elasticemail.com",
-    Username : "elgendy123456789@gmail.com",
-    Password : "D2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2",
-    To : 'elgendy123456789@gmail.com',
-    From : email,
-    Subject : `Contact Form Submission from ${name}`,
-    Body : `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`
+    Host: "smtp.elasticemail.com",
+    Username: "elgendy123456789@gmail.com",
+    Password: "D2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2",
+    To: 'elgendy123456789@gmail.com',
+    From: email,
+    Subject: `Contact Form Submission from ${name}`,
+    Body: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`
   }).then(
     message => alert(message),
     error => alert(error)
@@ -636,7 +774,7 @@ document.getElementById('contact-form').addEventListener('submit',(e)=>{
   document.getElementById('contact-form').reset();
   document.getElementById('contact-form').classList.remove('error');
 })
-//animation 
+//animation
 //emiljs without backend
 
 
