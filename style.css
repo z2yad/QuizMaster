@@ -45,11 +45,7 @@
 
 [data-theme="dark"] {
   --text-primary: #f8f9fa;
-<<<<<<< HEAD
   --text-secondary: #9aa0a6;
-=======
-  --text-secondary: #adb5bd;
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   --bg-light: #121212;
   --card-bg: #1e1e1e;
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -214,7 +210,7 @@ p {
   transition: var(--transition);
 }
 
-<<<<<<< HEAD
+
 /* Login Footer Links */
 .login-footer {
   display: flex;
@@ -246,8 +242,6 @@ p {
   text-decoration: underline;
 }
 
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
 .nav-link:hover {
   color: var(--primary-color);
 }
@@ -452,16 +446,11 @@ p {
 
 .categories {
   display: grid;
-<<<<<<< HEAD
   grid-template-columns: repeat(3, 1fr);
-=======
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
-<<<<<<< HEAD
 @media (max-width: 900px) {
   .categories {
     grid-template-columns: repeat(2, 1fr);
@@ -474,8 +463,6 @@ p {
   }
 }
 
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
 .category-card {
   background-color: var(--card-bg);
   border-radius: var(--border-radius);
@@ -1507,14 +1494,11 @@ p {
   }
 
   .categories {
-<<<<<<< HEAD
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     margin-bottom: 2rem;
     gap: 1.5rem;
-=======
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
+
   }
 }
 
@@ -2067,7 +2051,6 @@ p {
 
 .faq-item:nth-child(4) {
   transition-delay: 0.8s;
-<<<<<<< HEAD
 }
 
 .fa-chevron-down {
@@ -2081,7 +2064,5 @@ p {
 
 .faq-answer.show {
   max-height: 500px;
-  padding: 1.5fr;
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
+  padding: 1.5rem;
 }

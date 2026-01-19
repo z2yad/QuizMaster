@@ -207,7 +207,6 @@ function initRouting() {
     navigateTo(pageId);
   });
 }
-<<<<<<< HEAD
 const adminPanel = document.querySelector(".admin-panel");
 const app = document.querySelector(".app");
 
@@ -232,9 +231,6 @@ function updateAdminStats() {
   const users = JSON.parse(localStorage.getItem("users")) || [];
   document.querySelector(".stat-number").textContent = users.length;
 }
-=======
-
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
 // -----------------------
 // API Fetch
 // -----------------------
@@ -486,10 +482,7 @@ function updateAuthUI() {
   const signupBtn = document.querySelector(".signup-btn");
   const userMenu = document.querySelector(".user-menu");
   const userNameDisplay = document.querySelector(".user-name");
-<<<<<<< HEAD
   const adminLink = document.querySelector(".admin-link");
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
 
   if (currentUser) {
     if (loginBtn) loginBtn.parentElement.classList.add("hidden");
@@ -498,7 +491,6 @@ function updateAuthUI() {
       userMenu.classList.remove("hidden");
       if (userNameDisplay) userNameDisplay.textContent = currentUser.name || "User";
     }
-<<<<<<< HEAD
 
     if (currentUser.role === "admin") {
       if (adminLink) adminLink.classList.remove("hidden");
@@ -507,16 +499,11 @@ function updateAuthUI() {
       if (adminLink) adminLink.classList.add("hidden");
     }
 
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   } else {
     if (loginBtn) loginBtn.parentElement.classList.remove("hidden");
     if (signupBtn) signupBtn.parentElement.classList.remove("hidden");
     if (userMenu) userMenu.classList.add("hidden");
-<<<<<<< HEAD
     if (adminLink) adminLink.classList.add("hidden"); // Ensure admin link is hidden if no user
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   }
 }
 
@@ -588,7 +575,6 @@ async function hashPasswordSHA256(password, salt = '') {
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   return bufferToHex(hashBuffer);
 }
-<<<<<<< HEAD
 //login for admin
 //login for admin
 (async function seeAdmin() {
@@ -621,8 +607,6 @@ async function hashPasswordSHA256(password, salt = '') {
     console.log("Admin user seeded/updated successfully.");
   }
 })()
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
 // Login Form Submission validate
 const loginForm = document.getElementById("login-form");
 const errorsMessageLogin = document.getElementById("errors-messge-login");
@@ -702,34 +686,23 @@ function showMessage(element, message, type = "error") {
 const signupForm = document.getElementById("signup-form");
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-<<<<<<< HEAD
-=======
-  const messages = [];
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
+
   const name = document.getElementById("signup-name").value.trim();
   const email = document.getElementById("signup-email").value.trim();
   const password = document.getElementById("signup-password").value.trim();
   const confirmPassword = document.getElementById("signup-confirm-password").value.trim();
-<<<<<<< HEAD
   const terms = document.getElementById("terms-agree").checked;
-=======
-  const terms = document.getElementById("terms-agree").checked
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   const phone = document.getElementById("signup-phone").value.trim();
   const birthdate = document.getElementById("signup-birthdate").value.trim();
   document.querySelectorAll(".error").forEach(el => el.textContent = "");
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   // validate name
   if (!name) document.getElementById("name-error").textContent = "Please enter your name";
 
   // validate email
   if (!email) document.getElementById("email-error").textContent = "Please enter your email";
   const emailpattern = /^[^]+@[^]+\.[a-zA-Z]{2,3}$/;
-<<<<<<< HEAD
   if (email && !emailpattern.test(email)) document.getElementById("email-error").textContent = "Please enter a valid email address";
 
   // validate password
@@ -749,25 +722,6 @@ signupForm.addEventListener('submit', async (e) => {
   if (!phone) document.getElementById('phone-error').textContent = "Please enter your phone number";
   if (phone && !phonepattern.test(phone)) document.getElementById('phone-error').textContent = "phone number must have 11 digits";
 
-=======
-  if (!emailpattern.test(email)) document.getElementById("email-error").textContent = "Please enter a valid email address";
-  //لو فى اى مشكله مش هيكمل 
-  // validate 
-
-  if (!password) document.getElementById("password-error").textContent = "Please enter your password";
-  const passwordstrong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if (password && !passwordstrong.test(password)) document.getElementById("password-error").textContent = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character";
-  // validate confirm password
-  if (!confirmPassword) document.getElementById("confirm-password-error").textContent = "Please confirm your password";
-  if (password !== confirmPassword) document.getElementById("confirm-password-error").textContent = "Passwords do not match";
-  // validate terms
-  if (!terms) document.getElementById("terms-error").textContent = "You must agree to the Terms and Conditions";
-  // validate phone
-  const phonepattern = /^(?:01[0-2]|015)[0-9]{8}$|^(?:\+201[0-2]|\\+2015)[0-9]{8}$/; //صيغة  ل regexدولية 
-
-  if (!phone) document.getElementById('phone-error').textContent = "Please enter your phone number";
-  if (!phonepattern.test(phone)) document.getElementById('phone-error').textContent = "phone number must have 11 digits";
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   // validate birthdate
   if (!birthdate) {
     document.getElementById('birthdate-error').textContent = "Please enter your birthdate";
@@ -776,7 +730,6 @@ signupForm.addEventListener('submit', async (e) => {
     const userbirthdate = new Date(birthdate);
     if (userbirthdate > today) document.getElementById('birthdate-error').textContent = "Birthdate cannot be in the future";
   }
-<<<<<<< HEAD
 
   // validate gender
   const gender = document.querySelector('input[name="gender"]:checked');
@@ -785,12 +738,7 @@ signupForm.addEventListener('submit', async (e) => {
   if (document.querySelectorAll(".error:not(:empty)").length > 0) return;
 
   // Check LocalStorage
-=======
-  ;//مسح الخطاء الى كان قبل كدا
 
-  if (document.querySelectorAll(".error:not(:empty)").length > 0) return;
-  // 5. check LocalStorage
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   const emailNormalized = email.toLowerCase();
   let user = JSON.parse(localStorage.getItem("users")) || [];
   const userExists = user.some(u => u.email === emailNormalized);
@@ -798,15 +746,11 @@ signupForm.addEventListener('submit', async (e) => {
     document.getElementById("email-error").textContent = "Email already exists";
     return;
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
   // generate salt and hash password
   const salt = generateSalt(16);
   const passwordHash = await hashPasswordSHA256(password, salt);
 
-<<<<<<< HEAD
   // Store user data
   const userData = {
     role: "user",
@@ -836,31 +780,7 @@ signupForm.addEventListener('submit', async (e) => {
     errorBox.textContent = "";
     navigateTo("login");
   }, 2000);
-=======
-  //هنا مرحلة التخزين ف object
-  const userData = {
-    name,
-    email: emailNormalized,
-    password,
-    phone,
-    birthdate,
-    createdAt: new Date().toISOString()
-  }
-  user.push(userData);
-  localStorage.setItem("users", JSON.stringify(user));
-  // 7. success message
-  const errorBox = document.getElementById("errors-messge-signup");
-  errorBox.className = "toast success show";
-  errorBox.textContent = "✅ Account created successfully!";
-  signupForm.reset()
-  // اختفاء بعد 5 ثواني
-  setTimeout(() => {
-    errorBox.classList.remove("show");
-    errorBox.textContent = "";
 
-  }, 5000);
-  signupForm.reset();
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
 });
 
 // advanced logic for password
@@ -934,7 +854,6 @@ document.getElementById('contact-form').addEventListener('submit', (e) => {
   document.getElementById('contact-form').reset();
   document.getElementById('contact-form').classList.remove('error');
 })
-<<<<<<< HEAD
 // FAQ Accordion Logic
 const faqItems = document.querySelectorAll(".faq-item");
 
@@ -957,9 +876,4 @@ faqItems.forEach((item) => {
     }
   });
 });
-=======
-//animation
-//emiljs without backend
 
-
->>>>>>> 8905dacb8e2f6bd04a399b7063c34a0ca714218c
